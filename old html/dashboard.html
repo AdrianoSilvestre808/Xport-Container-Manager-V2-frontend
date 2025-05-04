@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Xport Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<script>
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "login.html";
+  }
+</script>
+
+<!-- Slim Sidebar Navigation -->
+<div class="sidebar">
+  <div class="logo">X</div>
+  <ul class="nav-links">
+    <li><a href="dashboard.html">📊</a></li>
+    <li><a href="index.html">📋</a></li>
+    <li><a href="archive.html">📁</a></li>
+    <li><a href="quick-links.html">📝</a></li>
+    <li><a href="https://www.xportmap.ovh" target="_blank">🗺️</a></li>
+    <li><button onclick="logout()" class="logout-btn">🚪</button></li>
+  </ul>
+</div>
+
+<!-- Main Content Area -->
+<div class="main-content">
+  <h1>📊 Dashboard</h1>
+
+  <div class="dashboard-container">
+    <!-- Total -->
+    <div class="dashboard-widget">
+      <div class="widget-title">Total Containers</div>
+      <div class="widget-value" id="totalCount">0</div>
+      <div class="widget-subtext">Combined Active + Archived</div>
+    </div>
+
+    <!-- Active -->
+    <div class="dashboard-widget">
+      <div class="widget-title">Active</div>
+      <div class="widget-value" id="activeCount">0</div>
+      <div class="widget-subtext">Current In Progress</div>
+    </div>
+
+    <!-- Archived -->
+    <div class="dashboard-widget">
+      <div class="widget-title">Archived</div>
+      <div class="widget-value" id="archivedCount">0</div>
+      <div class="widget-subtext">Moved to Archive</div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="dashboard-widget">
+      <div class="widget-title">Active vs Archived</div>
+      <div class="chart-box">
+        <canvas id="pieChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Bar Chart -->
+    <div class="dashboard-widget">
+      <div class="widget-title">Status Breakdown</div>
+      <div class="chart-box">
+        <canvas id="barChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_URL = "http://localhost:5000";
+
+async function loadDashboard() {
+  try {
+    const [containersRes, archiveRes] = await Promise.all([
+      fetch(`${API_URL}/containers`),
+      fetch(`${API_URL}/archive`)
+    ]);
+
+    const containers = await containersRes.json();
+    const archived = await archiveRes.json();
+
+    const active = containers.length;
+    const archivedCount = archived.length;
+    const total = active + archivedCount;
+
+    document.getElementById("totalCount").innerText = total;
+    document.getElementById("activeCount").innerText = active;
+    document.getElementById("archivedCount").innerText = archivedCount;
+
+    // Pie Chart: Active vs Archived
+    new Chart(document.getElementById("pieChart"), {
+      type: "pie",
+      data: {
+        labels: ["Active", "Archived"],
+        datasets: [{
+          data: [active, archivedCount],
+          backgroundColor: ["#4dabf7", "#20c997"]
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { labels: { color: "#fff" } }
+        }
+      }
+    });
+
+    // Bar Chart: Status counts
+    const statusCount = containers.reduce((acc, c) => {
+      acc[c.status] = (acc[c.status] || 0) + 1;
+      return acc;
+    }, {});
+
+    new Chart(document.getElementById("barChart"), {
+      type: "bar",
+      data: {
+        labels: Object.keys(statusCount),
+        datasets: [{
+          label: "Status",
+          data: Object.values(statusCount),
+          backgroundColor: "#339af0"
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: "#fff" }
+          },
+          x: {
+            ticks: { color: "#fff" }
+          }
+        },
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+  } catch (err) {
+    console.error("Failed to load dashboard stats:", err);
+  }
+}
+
+function logout() {
+  localStorage.removeItem("isLoggedIn");
+  window.location.href = "login.html";
+}
+
+loadDashboard();
+</script>
+
+</body>
+</html>

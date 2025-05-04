@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Links</title>
+    <link rel="stylesheet" href="css/quick-links.css">
+</head>
+<body>
+    <header>
+        <h1>Quick Links</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="archive.html">Container Archive</a>
+            <a href="https://www.xportmap.ovh/#4/42.07/-95.71" target="_blank">MAP</a>
+        </nav>
+    </header>
+
+    <!-- Sticky Notes Section -->
+    <div class="sticky-notes-container">
+        <div id="sticky-notes-board"></div>
+        <button id="add-note-btn">+ Add Note</button>
+    </div>
+
+    <!-- 🔥 Archive Section (Deleted Notes) -->
+        <h2>Deleted Notes (Trash Bin)</h2>
+    <div id="trash-bin"></div>
+
+    <!-- Expanded Note Modal -->
+    <div id="note-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <input type="text" id="modal-note-title" placeholder="Note Title">
+            <textarea id="modal-note-text" placeholder="Write your note..."></textarea>
+            <button id="save-note-btn">Save</button>
+        </div>
+    </div>
+
+    <script src="sticky-notes.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes</title>
+  <link rel="stylesheet" href="css/notes.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>X</h2>
+      <nav>
+        <a href="dashboard.html" title="Dashboard">
+          <i class="fas fa-tachometer-alt"></i>
+        </a>
+        <a href="index.html" title="Kanban">
+          <i class="fas fa-columns"></i>
+        </a>
+        <a href="archive.html" title="Archive">
+          <i class="fas fa-archive"></i>
+        </a>
+        <a href="notes.html" class="active" title="Notes">
+          <i class="fas fa-sticky-note"></i>
+        </a>
+        <a href="https://www.xportmap.ovh" title="Map">
+          <i class="fas fa-map-marked-alt"></i>
+        </a>
+      </nav>
+    </aside>
+
+    <main class="board">
+      <header>
+        <h1>Notes</h1>
+        <button id="addNoteBtn">+ Add Note</button>
+      </header>
+
+      <div class="notes-grid" id="note-list"></div>
+    </main>
+  </div>
+
+  <!-- Add/Edit Note Modal -->
+  <div id="note-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3 id="modal-title">New Note</h3>
+      <form id="note-form">
+        <input type="hidden" id="noteId" />
+        <input type="text" id="noteTitle" placeholder="Note Title" required />
+        <textarea id="noteContent" placeholder="Write your note here..." required></textarea>
+        <div class="actions">
+          <button type="submit">Save</button>
+          <button type="button" id="deleteNoteBtn">Delete</button>
+          <button type="button" onclick="document.getElementById('note-modal').classList.add('hidden')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script-notes.js"></script>
+</body>
+</html>

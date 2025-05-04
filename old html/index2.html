@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Xport International Container Manager</title>
+  <link rel="stylesheet" href="css/kanban.css" />
+</head>
+<body>
+
+<script>
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "login.html";
+  }
+</script>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="logo">Nav</div>
+  <ul class="nav-links">
+    <li><a href="dashboard.html">📊</a></li>
+    <li><a href="index.html">📋</a></li>
+    <li><a href="archive.html">📦</a></li>
+    <li><a href="quick-links.html">📝 </a></li>
+    <li><a href="https://www.xportmap.ovh/#4/42.07/-95.71" target="_blank">🗺️</a></li>
+    <li><button onclick="logout()" class="logout-btn">🚪</button></li>
+  </ul>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+  <h1>Xport International</h1>
+
+  <!-- Kanban Board -->
+  <div id="kanban-board">
+    <div class="column" id="working-on">
+      <h2>Working On</h2>
+      <div class="dropzone"></div>
+      <button id="addContainerBtn" onclick="showAddContainerForm()">+</button>
+    </div>
+
+    <div class="column" id="quote-sent">
+      <h2>Quote Sent</h2>
+      <div class="dropzone"></div>
+    </div>
+
+    <div class="column" id="in-works">
+      <h2>In Works</h2>
+      <div class="dropzone"></div>
+    </div>
+
+    <div class="column" id="do-sent">
+      <h2>D.O. Sent</h2>
+      <div class="dropzone"></div>
+    </div>
+
+    <div class="column" id="delivery-completed">
+      <h2>Delivery Completed</h2>
+      <div class="dropzone"></div>
+    </div>
+
+    <div class="column" id="pics-lod">
+      <h2>Pics/LOD</h2>
+      <div class="dropzone"></div>
+    </div>
+
+    <div class="column" id="must-invoice">
+      <h2>Must Invoice</h2>
+      <div class="dropzone"></div>
+    </div>
+
+    <div class="column" id="completed">
+      <h2>Completed</h2>
+      <div class="dropzone"></div>
+    </div>
+  </div>
+
+  <!-- Add Container Modal -->
+  <div id="addContainerModal" class="modal" style="display: none; flex-direction: column;">
+    <h2 class="add-container-header">Add New Container</h2>
+
+    <label for="containerProfileTitleInput">Container Profile Title:</label>
+    <input type="text" id="containerProfileTitleInput" readonly />
+
+    <div class="add-container-form">
+      <label for="containerIdInput">Container #:</label>
+      <input type="text" id="containerIdInput" />
+
+      <label for="containerBLNumberInput">BL #:</label>
+      <input type="text" id="containerBLNumberInput" />
+
+      <label for="containerLocationInput">Location:</label>
+      <input type="text" id="containerLocationInput" />
+
+      <label>Shipping Line:</label>
+      <select id="containerShippingLine">
+        <option value="MSC">MSC</option>
+        <option value="Maersk">Maersk</option>
+        <option value="CMA">CMA</option>
+        <option value="Misc">Misc.</option>
+      </select>
+
+      <label>Size:</label>
+      <select id="containerSizeInput">
+        <option value="20ft">20ft</option>
+        <option value="40ft">40ft</option>
+        <option value="40ft HC">40ft HC</option>
+        <option value="40ftreefer">40ft REEFER</option>
+      </select>
+
+      <label>Damage type:</label>
+      <select id="containerDamageInput">
+        <option value="damage-transload">Damage Transload</option>
+        <option value="destruction">Destruction</option>
+        <option value="direct-delivery">Direct Delivery</option>
+        <option value="rework">Rework</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="containerNotesInput">Notes:</label>
+      <textarea id="containerNotesInput" class="add-container-notes"></textarea>
+    </div>
+
+    <input type="file" id="containerAttachmentInput" />
+
+    <div class="modal-buttons">
+      <button onclick="addContainer(event)">Save</button>
+      <button onclick="closeAddContainerForm()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Container Details Modal -->
+  <div id="containerDetailsModal" class="modal" style="display: none;">
+    <div class="modal-content details-modal">
+      <h2>Container Details</h2>
+
+      <div class="details-top">
+        <label>Container #:</label>
+        <input type="text" id="detailsContainerId" />
+
+        <label>BL #:</label>
+        <input type="text" id="detailsBLNumber" />
+
+        <label>Size:</label>
+        <select id="detailsContainerSize">
+          <option value="20ft">20ft</option>
+          <option value="40ft">40ft</option>
+          <option value="40ft HC">40ft HC</option>
+          <option value="40ft reefer">40ft REEFER</option>
+        </select>
+
+        <label>Shipping Line:</label>
+        <select id="detailsContainerShippingLine">
+          <option value="MSC">MSC</option>
+          <option value="Maersk">Maersk</option>
+          <option value="CMA">CMA</option>
+          <option value="Misc">Misc.</option>
+        </select>
+
+        <label>Damage type:</label>
+        <select id="detailsDamageInput">
+          <option value="damage-transload">Damage Transload</option>
+          <option value="destruction">Destruction</option>
+          <option value="rework">Rework</option>
+          <option value="direct-delivery">Direct Delivery</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label>Location:</label>
+        <input type="text" id="detailsLocation" />
+      </div>
+
+      <label>Notes:</label>
+      <textarea id="detailsContainerNotes"></textarea>
+      <input type="file" id="detailsAttachmentInput" />
+
+      <div class="modal-buttons">
+        <button class="save-btn" onclick="saveContainerDetails()">Save</button>
+        <button class="close-btn" onclick="closeContainerDetails()">Close</button>
+      </div>
+
+      <button onclick="exportToExcel(document.getElementById('detailsContainerId').value)">Download Delivery Order</button>
+    </div>
+  </div>
+</div>
+
+<script defer src="script.js"></script>
+<script>
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "login.html";
+  }
+</script>
+</body>
+</html>

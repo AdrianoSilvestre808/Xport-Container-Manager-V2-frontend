@@ -1,0 +1,228 @@
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 768px) {
+    /* General mobile adjustments */
+    body {
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+    }
+    
+    /* App container adjustments */
+    .app {
+      flex-direction: column;
+      height: auto;
+      min-height: 100vh;
+    }
+    
+    /* Sidebar transformations */
+    .sidebar {
+      width: 100%;
+      height: auto;
+      padding: 10px;
+      position: static;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    
+    .sidebar h2 {
+      margin-bottom: 15px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .sidebar nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      width: 100%;
+    }
+    
+    .sidebar nav a {
+      margin: 5px;
+      padding: 5px 10px;
+      background: #2a2f3d;
+      border-radius: 4px;
+    }
+    
+    /* Slim sidebar adjustment */
+    .sidebar.slim-sidebar {
+      width: 100%;
+      height: 60px;
+      flex-direction: row;
+      padding: 5px;
+      justify-content: space-around;
+    }
+    
+    .sidebar.slim-sidebar .logo {
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+    
+    .sidebar.slim-sidebar .nav-links {
+      display: flex;
+      flex-direction: row;
+      margin: 0;
+    }
+    
+    .sidebar.slim-sidebar .nav-links li {
+      margin: 0 5px;
+    }
+    
+    .sidebar.slim-sidebar .logout-btn {
+      margin-top: 0;
+    }
+    
+    /* Main content adjustments */
+    .main-content,
+    .dashboard,
+    .board {
+      margin-left: 0;
+      padding: 15px;
+      overflow-x: hidden;
+    }
+    
+    /* KPI cards grid */
+    .kpis {
+      grid-template-columns: 1fr;
+    }
+    
+    /* Kanban board adjustments */
+    #kanban-board {
+      flex-direction: column;
+      gap: 15px;
+      overflow-x: hidden;
+    }
+    
+    .column {
+      width: 100% !important;
+      flex: 1 1 auto !important;
+    }
+    
+    /* Card grid adjustments */
+    .card-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    /* Filter adjustments */
+    .filters {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .filters input,
+    .filters select {
+      max-width: 100% !important;
+      width: 100%;
+    }
+    
+    /* Chart container adjustments */
+    .chart-container {
+      grid-template-columns: 1fr;
+    }
+    
+    /* Modal adjustments */
+    .modal-content {
+      width: 95%;
+      margin: 20% auto;
+    }
+    
+    /* Touch target improvements */
+    button, a, input[type="checkbox"], input[type="radio"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    .container-card button {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+  }
+  
+  /* Additional small screen adjustments */
+  @media (max-width: 480px) {
+    /* Font size adjustments */
+    body {
+      font-size: 14px;
+    }
+    
+    h1 {
+      font-size: 18px;
+    }
+    
+    /* Button adjustments */
+    .card-buttons {
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .card-buttons button {
+      width: 100%;
+    }
+    
+    /* Modal buttons */
+    .modal-buttons {
+      flex-direction: column;
+    }
+    
+    .modal-buttons button {
+      margin: 5px 0;
+    }
+    
+    /* Hide less important elements on very small screens */
+    .kpi-card h3 {
+      font-size: 0.8rem;
+    }
+    
+    .kpi-card p {
+      font-size: 1.5rem;
+    }
+  }
+  
+  /* Mobile menu toggle for slim sidebar */
+  .mobile-menu-toggle {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .mobile-menu-toggle {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      background: #4c6ef5;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    
+    .sidebar.slim-sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      position: fixed;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: flex-start;
+      z-index: 999;
+    }
+    
+    .sidebar.slim-sidebar.active {
+      transform: translateX(0);
+    }
+    
+    .main-content.sidebar-active {
+      margin-left: 0;
+    }
+  }
+  
+  /* Prevent zoom on input focus */
+  @media (max-width: 768px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+  }
