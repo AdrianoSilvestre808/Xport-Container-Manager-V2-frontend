@@ -9,6 +9,15 @@
     --text-muted: #94a3b8;
     --border-radius: 12px;
     --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --sticky-yellow: #fef08a;
+    --sticky-yellow-dark: #fde047;
+    --sticky-pink: #fecdd3;
+    --sticky-pink-dark: #fda4af;
+    --sticky-blue: #bfdbfe;
+    --sticky-blue-dark: #93c5fd;
+    --sticky-green: #bbf7d0;
+    --sticky-green-dark: #86efac;
+    --note-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
   }
   
   body {
@@ -106,37 +115,135 @@
     transform: translateY(-2px);
   }
   
-  .notes-grid {
+.notes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-  }
-  
-  .note-card {
-    background: var(--bg-card);
-    padding: 15px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 25px;
+    padding: 10px;
+}
+
+.note-card {
+    position: relative;
+    padding: 20px;
+    border-radius: 2px 15px 15px 15px;
     transition: var(--transition);
-    border-left: 3px solid var(--primary);
     cursor: pointer;
-  }
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--note-shadow);
+    transform: rotate(-1deg);
+    border: none;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* Limit to 5 lines */
+    -webkit-box-orient: vertical;
+    max-height: 200px; /* Fixed height */
+    transition: max-height 0.3s ease;
+}
+
+/* Different colored notes */
+.note-card:nth-child(4n+1) {
+    background: var(--sticky-yellow);
+    color: #854d0e;
+    border-top: 12px solid var(--sticky-yellow-dark);
+}
+
+.note-card:nth-child(4n+2) {
+    background: var(--sticky-pink);
+    color: #831843;
+    border-top: 12px solid var(--sticky-pink-dark);
+    transform: rotate(1deg);
+}
+
+.note-card:nth-child(4n+3) {
+    background: var(--sticky-blue);
+    color: #1e40af;
+    border-top: 12px solid var(--sticky-blue-dark);
+    transform: rotate(-2deg);
+}
+
+.note-card:nth-child(4n+4) {
+    background: var(--sticky-green);
+    color: #166534;
+    border-top: 12px solid var(--sticky-green-dark);
+    transform: rotate(0.5deg);
+}
+
+.note-card:hover {
+    transform: rotate(0deg) scale(1.05) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    -webkit-line-clamp: unset;
+    max-height: 500px; /* Expand to show more on hover */
+}
+
+.note-card h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+    padding-bottom: 8px;
+}
   
-  .note-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
-  }
-  
-  .note-card h3 {
-    margin: 0 0 10px 0;
-    color: var(--text-light);
-  }
-  
-  .note-card p {
+.note-card p {
     margin: 0;
-    color: var(--text-muted);
-    font-size: 14px;
-  }
+    font-size: 0.95rem;
+    line-height: 1.5;
+    flex-grow: 1;
+    position: relative;
+}
+
+/* Add a subtle paper texture effect */
+.note-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0) 20%,
+        rgba(0, 0, 0, 0.03) 100%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.note-card p::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    pointer-events: none;
+}
+
+.note-card:hover p::after {
+    display: none;
+}
+
+
+
+/* Add a subtle corner fold effect to notes */
+.note-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0.05) 50%,
+        transparent 50%
+    );
+    border-radius: 0 0 0 5px;
+}
   
   .modal {
     position: fixed;
@@ -210,3 +317,98 @@
   #deleteNoteBtn:hover {
     background: #dc2626;
   }
+
+  /* Add these new styles */
+.color-selector {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+}
+
+.color-selector label {
+    margin-right: 10px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.color-options {
+    display: flex;
+    gap: 8px;
+}
+
+.color-option {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition);
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+.color-option.yellow {
+    background: var(--sticky-yellow);
+    border-color: var(--sticky-yellow-dark);
+}
+
+.color-option.pink {
+    background: var(--sticky-pink);
+    border-color: var(--sticky-pink-dark);
+}
+
+.color-option.blue {
+    background: var(--sticky-blue);
+    border-color: var(--sticky-blue-dark);
+}
+
+.color-option.green {
+    background: var(--sticky-green);
+    border-color: var(--sticky-green-dark);
+}
+
+input[type="radio"]:checked + .color-option {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--primary);
+}
+
+/* Update note card styles to use data-color attribute */
+.note-card {
+    /* Default yellow color */
+    background: var(--sticky-yellow);
+    color: #854d0e;
+    border-top: 12px solid var(--sticky-yellow-dark);
+}
+
+.note-card[data-color="yellow"] {
+    background: var(--sticky-yellow);
+    color: #854d0e;
+    border-top: 12px solid var(--sticky-yellow-dark);
+}
+
+.note-card[data-color="pink"] {
+    background: var(--sticky-pink);
+    color: #831843;
+    border-top: 12px solid var(--sticky-pink-dark);
+}
+
+.note-card[data-color="blue"] {
+    background: var(--sticky-blue);
+    color: #1e40af;
+    border-top: 12px solid var(--sticky-blue-dark);
+}
+
+.note-card[data-color="green"] {
+    background: var(--sticky-green);
+    color: #166534;
+    border-top: 12px solid var(--sticky-green-dark);
+}
+
+/* Remove the nth-child color assignments */
+.note-card:nth-child(4n+1),
+.note-card:nth-child(4n+2),
+.note-card:nth-child(4n+3),
+.note-card:nth-child(4n+4) {
+    transform: rotate(0deg);
+}

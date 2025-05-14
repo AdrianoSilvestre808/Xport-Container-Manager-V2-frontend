@@ -32,7 +32,7 @@ const elements = {
 async function initializeDashboard() {
   try {
     // Load container data
-    const response = await fetch("http://localhost:5000/containers");
+    const response = await fetch("http://198.245.53.14:5000/containers");
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     dashboardState.containers = await response.json();
 
@@ -165,7 +165,7 @@ function updateStatusChart(containers) {
 
 async function loadShippingLineChart() {
   try {
-    const response = await fetch("http://localhost:5000/containers/stats/shipping-line");
+    const response = await fetch("http://198.245.53.14:5000/containers/stats/shipping-line");
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     renderShippingChart(data);

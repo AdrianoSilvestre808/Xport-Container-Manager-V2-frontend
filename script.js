@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchContainers() {
     try {
       console.log("Fetching active containers...");
-      const response = await fetch("http://localhost:5000/containers");
+      const response = await fetch("http://198.245.53.14:5000/containers");
       
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
         created_at: document.getElementById("created_at").value || new Date().toISOString().slice(0, 10)
       };
   
-      fetch("http://localhost:5000/containers", {
+      fetch("http://198.245.53.14:5000/containers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
       try {
         const response = await fetch(
-          `http://localhost:5000/containers/${selectedContainerId}`, 
+          `http://198.245.53.14:5000/containers/${selectedContainerId}`, 
           {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
@@ -290,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         try {
           const response = await fetch(
-            `http://localhost:5000/containers/${containerId}`, 
+            `http://198.245.53.14:5000/containers/${containerId}`, 
             {
               method: "PATCH",
               headers: { "Content-Type": "application/json" },
@@ -355,7 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/containers/${containerId}/attachments`);
+      const response = await fetch(`http://198.245.53.14:5000/containers/${containerId}/attachments`);
       const attachments = await response.json();
       
       const attachmentsList = document.getElementById('attachments-list');
@@ -387,7 +387,7 @@ document.addEventListener("DOMContentLoaded", () => {
       formData.append('attachments', files[i]);
     }
 
-    fetch(`http://localhost:5000/containers/${selectedContainerId}/attachments`, {
+    fetch(`http://198.245.53.14:5000/containers/${selectedContainerId}/attachments`, {
       method: 'POST',
       body: formData
     })
@@ -429,7 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!confirm("Are you sure you want to delete this container?")) return;
   
     try {
-      const response = await fetch(`http://localhost:5000/containers/${selectedContainerId}`, {
+      const response = await fetch(`http://198.245.53.14:5000/containers/${selectedContainerId}`, {
         method: "DELETE"
       });
       
@@ -451,7 +451,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function handleArchive() {
     if (!selectedContainerId) return;
     
-    fetch(`http://localhost:5000/containers/${selectedContainerId}/archive`, {
+    fetch(`http://198.245.53.14:5000/containers/${selectedContainerId}/archive`, {
       method: "PATCH"
     })
       .then(res => {

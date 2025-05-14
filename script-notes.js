@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const method = id ? "PUT" : "POST";
     const endpoint = id ? `/notes/${id}` : "/notes";
 
-    await fetch(`http://localhost:5000${endpoint}`, {
+    await fetch(`http://198.245.53.14:5000${endpoint}`, {
       method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, content }),
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmed = confirm("Are you sure you want to delete this note?");
     if (!confirmed) return;
 
-    await fetch(`http://localhost:5000/notes/${id}`, {
+    await fetch(`http://198.245.53.14:5000/notes/${id}`, {
       method: "DELETE",
     });
 
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function fetchNotes() {
-  fetch("http://localhost:5000/notes")
+  fetch("http://198.245.53.14:5000/notes")
     .then(res => res.json())
     .then(notes => {
       const list = document.getElementById("note-list");
@@ -50,8 +50,15 @@ function fetchNotes() {
 
       notes.forEach(note => {
         const card = document.createElement("div");
-        card.className = "container-card";
-        card.innerHTML = `<strong>${note.title}</strong>`;
+        card.className = "note-card";
+        // Truncate content for preview
+        const previewContent = note.content.length > 100 
+          ? note.content.substring(0, 100) + '...' 
+          : note.content;
+        card.innerHTML = `
+          <h3>${note.title}</h3>
+          <p>${previewContent}</p>
+        `;
         card.onclick = () => openNoteModal(note);
         list.appendChild(card);
       });

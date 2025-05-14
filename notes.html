@@ -42,21 +42,37 @@
   </div>
 
   <!-- Add/Edit Note Modal -->
-  <div id="note-modal" class="modal hidden">
+<div id="note-modal" class="modal hidden">
     <div class="modal-content">
-      <h3 id="modal-title">New Note</h3>
-      <form id="note-form">
-        <input type="hidden" id="noteId" />
-        <input type="text" id="noteTitle" placeholder="Note Title" required />
-        <textarea id="noteContent" placeholder="Write your note here..." required></textarea>
-        <div class="actions">
-          <button type="submit">Save</button>
-          <button type="button" id="deleteNoteBtn">Delete</button>
-          <button type="button" onclick="document.getElementById('note-modal').classList.add('hidden')">Cancel</button>
-        </div>
-      </form>
+        <h3 id="modal-title">New Note</h3>
+        <form id="note-form">
+            <input type="hidden" id="noteId" />
+            <input type="text" id="noteTitle" placeholder="Note Title" required />
+            <textarea id="noteContent" placeholder="Write your note here..." required rows="8"></textarea>
+            <div class="color-selector">
+                <label>Note Color:</label>
+                <div class="color-options">
+                    <input type="radio" id="color-yellow" name="noteColor" value="yellow" checked>
+                    <label for="color-yellow" class="color-option yellow" title="Yellow"></label>
+                    
+                    <input type="radio" id="color-pink" name="noteColor" value="pink">
+                    <label for="color-pink" class="color-option pink" title="Pink"></label>
+                    
+                    <input type="radio" id="color-blue" name="noteColor" value="blue">
+                    <label for="color-blue" class="color-option blue" title="Blue"></label>
+                    
+                    <input type="radio" id="color-green" name="noteColor" value="green">
+                    <label for="color-green" class="color-option green" title="Green"></label>
+                </div>
+            </div>
+            <div class="actions">
+                <button type="submit">Save</button>
+                <button type="button" id="deleteNoteBtn">Delete</button>
+                <button type="button" onclick="document.getElementById('note-modal').classList.add('hidden')">Cancel</button>
+            </div>
+        </form>
     </div>
-  </div>
+</div>
 
   <script src="script-notes.js"></script>
 </body>

@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
     attachmentsList.innerHTML = "<em>Loading attachments...</em>";
 
     try {
-      const response = await fetch(`http://localhost:5000/containers/${containerId}/attachments`);
+      const response = await fetch(`http://198.245.53.14:5000/containers/${containerId}/attachments`);
       if (!response.ok) throw new Error("Failed to fetch attachments");
       
       const files = await response.json();
@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     try {
       const response = await fetch(
-        `http://localhost:5000/containers/${selectedArchivedContainerId}/job-status`,
+        `http://198.245.53.14:5000/containers/${selectedArchivedContainerId}/job-status`,
         {
           method: "PATCH",
           headers: {
@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     try {
       const response = await fetch(
-        `http://localhost:5000/containers/${selectedArchivedContainerId}/job-status`,
+        `http://198.245.53.14:5000/containers/${selectedArchivedContainerId}/job-status`,
         {
           method: "PATCH",
           headers: {
@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     try {
       const response = await fetch(
-        `http://localhost:5000/containers/${selectedArchivedContainerId}/restore`,
+        `http://198.245.53.14:5000/containers/${selectedArchivedContainerId}/restore`,
         { method: "PATCH" }
       );
       
@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     try {
       const response = await fetch(
-        `http://localhost:5000/containers/${selectedArchivedContainerId}`,
+        `http://198.245.53.14:5000/containers/${selectedArchivedContainerId}`,
         { method: "DELETE" }
       );
       
@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ======================
   const fetchArchivedContainers = async () => {
     try {
-      const response = await fetch("http://localhost:5000/containers/archived");
+      const response = await fetch("http://198.245.53.14:5000/containers/archived");
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       
       const containers = await response.json();
